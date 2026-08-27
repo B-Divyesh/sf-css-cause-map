@@ -4,3 +4,9 @@ dist/
 *.log
 graphify-out/
 .DS_Store
+node_modules/
+.output/
+dist/
+.wxt/
+site/public/downloads/*.zip
+*.log
