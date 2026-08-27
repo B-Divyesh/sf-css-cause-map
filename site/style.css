@@ -48,7 +48,7 @@ h1 em { color: var(--red-deep); font-weight: 400; text-decoration: underline; te
 .lede { max-width: 610px; margin: 28px 0; color: var(--pencil); font: 19px/1.6 Georgia, serif; }
 .hero-actions { display: flex; gap: 22px; align-items: center; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 12px 20px; border: 2px solid var(--red-deep); border-radius: 2px; color: var(--raised); background: var(--red); box-shadow: 4px 4px 0 var(--ink); font-weight: 800; text-decoration: none; }
-.button span { margin-left: 12px; opacity: .75; font-size: 10px; }
+.button span { margin-left: 12px; font-size: 10px; }
 .button:hover { background: var(--red-deep); }
 .button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
 .text-link { min-height: 44px; display: inline-flex; align-items: center; font-size: 13px; font-weight: 800; text-decoration: none; }

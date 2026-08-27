@@ -25,8 +25,9 @@ form?.addEventListener('submit', async (event) => {
   }
 });
 
+const hasReturnedLicense = new URL(location.href).searchParams.has('license');
 const returned = captureReturnedLicense();
-if (returned) {
+if (hasReturnedLicense && returned) {
   const notice = document.createElement('div');
   notice.className = 'purchase-notice';
   notice.setAttribute('role', 'status');
