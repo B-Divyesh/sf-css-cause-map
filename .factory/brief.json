@@ -1,0 +1,9 @@
+{
+  "slug": "css-cause-map",
+  "title": "CSS Cause Map",
+  "artifact_class": "browser-extension",
+  "user": "A frontend developer diagnosing a live layout defect who needs a compact explanation of which CSS rule, ancestor, or dynamic DOM change caused an element's final size, offset, or gap.",
+  "smallest_useful_product": "Browser extension adds an element picker, captures computed layout plus ancestor constraints, ranks CSS properties contributing to selected dimensions and offsets, and exports a scrubbed HTML or JSON report.",
+  "monetization": "one-time",
+  "constraints": "User-authorized tabs only; local-first; distinguish computed correlation from browser-layout causation; conservative Chrome permissions."
+}
