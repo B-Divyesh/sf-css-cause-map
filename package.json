@@ -1,0 +1,26 @@
+{
+  "name": "css-cause-map",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first browser extension that maps likely CSS layout causes.",
+  "scripts": {
+    "dev": "wxt",
+    "dev:site": "vite --config vite.site.config.ts",
+    "build:extension": "wxt build",
+    "package": "wxt zip",
+    "build:site": "vite build --config vite.site.config.ts && node scripts/stage-package.mjs",
+    "build": "npm run build:extension && npm run package && npm run build:site",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.324",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4",
+    "wxt": "^0.20.6"
+  }
+}

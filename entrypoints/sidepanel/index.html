@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Cause Map</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to cause map</a>
+    <header class="masthead">
+      <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div><p class="kicker">Field sheet 01</p><h1>CSS Cause Map</h1></div>
+      <button id="settings-button" class="icon-button" type="button" aria-label="Open license and settings" title="License and settings">⌁</button>
+    </header>
+    <main id="main">
+      <section class="command" aria-labelledby="command-title">
+        <div><p class="section-label" id="command-title">Live specimen</p><p id="status-copy">Choose one element on this page to begin.</p></div>
+        <button id="pick-button" class="primary" type="button"><span aria-hidden="true">◎</span> Pick element</button>
+        <button id="cancel-button" class="secondary hidden" type="button">Cancel picker</button>
+      </section>
+
+      <div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
+
+      <section id="empty-state" class="empty-state" aria-labelledby="empty-title">
+        <div class="empty-sketch" aria-hidden="true"><i></i><i></i><i></i><b>?</b></div>
+        <h2 id="empty-title">Start with the defect</h2>
+        <p>Pick the element whose size, offset, or gap looks wrong. The map ranks its own rules and the constraints above it.</p>
+        <ul><li>No DOM text is collected</li><li>Nothing leaves your browser</li><li>Escape cancels the picker</li></ul>
+      </section>
+
+      <section id="results" class="results hidden" aria-label="Analysis result">
+        <div class="specimen-head">
+          <div><p class="section-label">Selected element</p><code id="target-selector"></code></div>
+          <button id="repick-button" class="text-button" type="button">Pick another</button>
+        </div>
+        <div class="measurements" aria-label="Element measurements">
+          <div><span>width</span><strong id="measure-width"></strong></div>
+          <div><span>height</span><strong id="measure-height"></strong></div>
+          <div><span>x / y</span><strong id="measure-offset"></strong></div>
+        </div>
+        <p id="comparison" class="comparison hidden" aria-live="polite"></p>
+        <div class="result-toolbar">
+          <div><p class="section-label">Ranked causes</p><p class="micro">Evidence strength, not proof</p></div>
+          <button id="recapture-button" class="secondary compact" type="button">↻ Recapture</button>
+        </div>
+        <ol id="cause-list" class="cause-list"></ol>
+        <details class="changes-sheet"><summary>DOM changes since capture <span id="change-count">0</span></summary><ul id="change-list"></ul></details>
+        <p id="caveat" class="caveat"></p>
+        <div class="exports">
+          <p class="section-label">Tear-off report</p>
+          <label class="check"><input id="anonymous-check" type="checkbox" /> Replace selectors with labels</label>
+          <div><button id="export-json" class="secondary" type="button">Export JSON</button><button id="export-html" class="secondary" type="button">Export HTML</button></div>
+          <button id="save-report" class="text-button" type="button">Save to field log <span class="paid-tag">FIELD KIT</span></button>
+          <div id="field-note" class="field-note hidden"><label for="report-note">Private notebook note</label><textarea id="report-note" rows="3" placeholder="What did you reproduce or toggle?"></textarea></div>
+        </div>
+      </section>
+
+      <section id="settings" class="settings hidden" aria-labelledby="settings-title">
+        <button id="settings-close" class="text-button back" type="button">← Back to map</button>
+        <p class="section-label">One-time unlock</p>
+        <h2 id="settings-title">Field Kit</h2>
+        <p>Keep an unlimited local report log and add private notebook notes. Core diagnosis and both exports stay free.</p>
+        <p class="price"><strong>$12</strong> once · no subscription</p>
+        <a class="primary link-button" href="https://api.sociobot.in/api/v1/products/css-cause-map/checkout" target="_blank" rel="noreferrer">Buy Field Kit</a>
+        <form id="license-form">
+          <label for="license-input">Have a license? Paste it here</label>
+          <div class="license-row"><input id="license-input" name="license" autocomplete="off" required /><button class="secondary" type="submit">Verify</button></div>
+        </form>
+        <p id="license-state" class="micro" aria-live="polite">Free edition active.</p>
+        <section id="field-log" class="field-log hidden" aria-labelledby="field-log-title"><p class="section-label" id="field-log-title">Saved field log</p><ul id="field-log-list"></ul></section>
+        <p class="legal-note">Checkout is hosted by Sociobot; Dodo is merchant of record. Refunds are handled there and revoke the license. <a href="https://css-cause-map.sociobot.in/privacy" target="_blank">Privacy</a> · <a href="https://css-cause-map.sociobot.in/terms" target="_blank">Terms</a></p>
+      </section>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
