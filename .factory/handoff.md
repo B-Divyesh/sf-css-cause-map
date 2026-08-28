@@ -1,98 +1,57 @@
-# Handoff — polish round 1
+# Handoff — adversarial review 2
 
-## Status: deployed and verified
+## Status: FAIL recorded
 
-Repair commit: `3034f13bdf88d86e9bea57ec2df426d61d6112fb`
-Base reviewed: `edc0155a2151f50764caf5522b3f2f64c544cdc3`
-Review report: `a772a2936f2938a711acd40ceb005e8240c75455`
+Reviewed commit: `062876abbc095b6bd42d114c23e682c79a895fcb`
+
 Live site: <https://css-cause-map.sociobot.in>
 
-## What changed
+Full report: `.factory/review-2.md`
 
-- Rewrote the first screen for frontend developers and made **Try it with
-  sample data** the primary action.
-- Added the standalone `/demo/?demo=1` sandbox with a realistic layout report,
-  persistent isolation banner, deterministic reset, `demo:` storage, exports,
-  capture comparison, and offline shell.
-- Removed the unavailable paid checkout and license code. The extension,
-  report log, and file exports are free.
-- Added claim registry and 11 tagged claim tests. Added generated social/touch
-  assets, complete metadata, legal routes, shared skeleton, route focus/live
-  announcement, styled 404, link checks, security/cache policy, and mobile
-  layouts.
-- Preserved the handwritten lab-notebook identity, with its provenance and
-  visual-system record in `.factory/design.md`.
+## What was done
 
-The complete finding-to-change-to-evidence map is in `.factory/polish-1.md`.
+- Reviewed the live landing page cold at 390×844 and 1366×900.
+- Audited every landing and README sentence, heading, action, and claim-like
+  statement.
+- Exercised the live demo, reset, exit, exports, storage separation,
+  same-origin request boundary, and offline reload.
+- Checked route metadata, 404 handling, links, browser Back/focus, shared
+  skeleton, mobile containment, visual identity, console output, and Axe.
+- Rechecked every finding from review 1 and polish 1 against live behavior and
+  repository code.
+- Ran every command in `.factory/claims.json` from a clean clone.
+- Ran the aggregate test and production build afterward to separate the
+  clean-command defect from general product failures.
 
-## Exact verification evidence
+No product code was modified.
 
-### Fresh clean clone
-
-Created a fresh clone at `3034f13` with no generated WXT directory, then ran:
+## Verification results
 
 ```text
-npm ci                                      PASS — 524 packages installed
-npm run typecheck                           PASS
-npm run lint                                PASS
-npm audit --omit=dev --audit-level=high     PASS — 0 production vulnerabilities
-npm run test:claims                         PASS — 11/11 tagged claim tests
-each of the 11 claims.json test commands    PASS — 1 matching test each
-npm test                                    PASS — 28 Vitest + 29 Playwright checks; 1 intentional mobile skip
-npm run build                               PASS — MV3 output, ZIP, and dist/site
+Fresh clone + npm ci: PASS
+11/11 individual claims.json commands: FAIL before test execution
+  cause: missing .wxt/tsconfig.json; test:claims has no WXT preparation hook
+npm test after its pretest hook: PASS — 28 Vitest, 28 Playwright, 1 intentional skip
+npm run build: PASS — MV3 extension, ZIP, and dist/site
+verify-url.sh against live root: PASS
+Live Axe, desktop and 390 px demo: 0 violations
+Live console errors: 0
+Live internal/external link crawl: PASS
+Live demo storage/network/offline exercise: PASS
 ```
 
-Every `claims.json` command was invoked separately from that clone:
-`ranked-cause-report`, `demo-isolation`, `offline-core`, `private-exports`,
-`capture-comparison`, `free-core`, `privacy-boundaries`,
-`manifest-permissions`, `picker-inputs`, `local-report-log`, and
-`production-build`.
+Clean-clone evidence directory:
+`/tmp/css-cause-map-review2-clean-rHPlrg` (disposable).
 
-The fresh production build measured 45.81 kB unpacked extension, 25.5 kB ZIP,
-0.38 kB gzip landing JS, 4.62 kB gzip CSS, and a 17.2 kB mobile WebP hero.
+## Findings left for the repair round
 
-### Production deployment and cold live check
+- F-2-1: all registered claim commands fail from a clean clone.
+- F-2-2: the ranked cause report begins below the first mobile viewport.
+- F-2-3: README test-coverage promise remains unlisted.
+- F-2-4: README deployment-header promise remains unlisted.
+- F-2-5: “Demo” links are 38.53×44 px while tests check only height.
+- F-2-6: the privacy page's saved-report deletion promise is unlisted and
+  untested.
 
-Deployed `dist/site/` with `/opt/fleet/lib/deploy-static.sh css-cause-map dist/site`.
-Azure deployment `ed71626a-e232-4151-a185-ef8028918844` completed successfully.
-
-- `/opt/fleet/lib/verify-url.sh https://css-cause-map.sociobot.in .factory/evidence/live`
-  passed: HTTP 200 in 589 ms, correct title/lang, one h1/main, no missing image
-  alt text, no unlabeled buttons, and no console errors.
-- Fresh mobile live context confirmed `/?demo=1` redirects to `/demo/?demo=1`,
-  the banner is present, capture/reset restores 312 px, normal storage remains
-  unchanged, and **Start for real** deletes the demo key.
-- Fresh live checks confirmed `/`, `/demo/?demo=1`, `/privacy/`, `/terms/`, and
-  `/404/` return 200 with their expected titles. An unknown path returns the
-  product-styled 404 with HTTP 404. Internal landing links all returned 200.
-- Forward navigation and browser Back moved focus to the destination h1. The
-  normal cold live flow reported no console errors.
-- Playwright Axe ran on live demo at 1366×900 and 390×844: 0 violations and
-  0 console errors.
-- Live headers include immutable assets, self-only CSP, `X-Frame-Options: DENY`,
-  restrictive Permissions Policy, `nosniff`, and strict-origin referrer policy.
-
-Screenshots: `.factory/evidence/polish-1-landing-desktop.png`,
-`.factory/evidence/polish-1-landing-mobile.png`,
-`.factory/evidence/polish-1-demo-desktop.png`,
-`.factory/evidence/polish-1-demo-mobile.png`,
-`.factory/evidence/polish-1-not-found.png`, and `.factory/evidence/live/`.
-
-Lighthouse 13.4.1 was attempted with the installed Chromium, but its tab
-crashed before producing a report. No Lighthouse score is claimed. The direct
-bundle-budget, Playwright accessibility, offline, privacy, response-policy,
-and live smoke checks above passed.
-
-## Run and deploy
-
-```sh
-npm ci
-npm test
-npm run build
-/opt/fleet/lib/deploy-static.sh css-cause-map dist/site
-```
-
-## Known gaps
-
-None in the reviewed acceptance scope. Lighthouse scoring remains unavailable
-in this container because the Lighthouse browser process crashes.
+See `.factory/review-2.md` for exact quotes, evidence, required fixes, complete
+copy inventory, and the prior-finding audit.
