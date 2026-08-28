@@ -33,4 +33,16 @@ describe('release regression contracts', () => {
     }
     expect(routes.find((entry) => entry.route === '/sw.js')?.headers['Cache-Control']).toBe('no-cache, max-age=0, must-revalidate');
   });
+
+  it('keeps the extension skip target and documented size floors in source', async () => {
+    const panel = await readFile(resolve(root, 'entrypoints/sidepanel/index.html'), 'utf8');
+    const panelCss = await readFile(resolve(root, 'entrypoints/sidepanel/style.css'), 'utf8');
+    const siteCss = await readFile(resolve(root, 'site/style.css'), 'utf8');
+
+    expect(panel).toContain('<main id="main" tabindex="-1">');
+    expect(panelCss).toContain('.compact { min-height: 44px; padding: 10px 14px; font-size: 14px; }');
+    expect(panelCss).toContain('.skip { position: fixed; top: 8px; left: 8px; z-index: 10; display: inline-flex; align-items: center; height: 44px;');
+    expect(siteCss).toContain('.brand { display: inline-flex; min-height: 44px;');
+    expect(siteCss).toContain('.method-list p { max-width: 690px; margin: 0; color: var(--pencil); font-size: 16px; line-height: 1.6; }');
+  });
 });

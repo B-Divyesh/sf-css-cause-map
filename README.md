@@ -60,11 +60,13 @@ It requests no blanket website host permission.
 
 `npm run typecheck` always prepares WXT's generated declarations first, so it
 works from a fresh checkout. `npm test` runs deterministic ranker tests against
-20 seeded layout scenarios (flex, grid, clamps, box model, margin, transform,
-and positioning), report privacy/escaping tests, and Playwright checks at
-desktop and 390px: skip-link focus, axe accessibility, no horizontal overflow,
-same-origin first-load requests, and an offline PWA reload. `npm run lint`
-checks the TypeScript source.
+seeded layout scenarios (flex, grid, clamps, box model, margin, transform, and
+positioning), report privacy/escaping tests, and Playwright checks at desktop
+and 390px: skip-link focus, axe accessibility, 16px site-copy and 44px target
+floors, no horizontal overflow, same-origin first-load requests, and an offline
+PWA reload. It also launches the packaged MV3 extension in Chromium to verify
+the side-panel skip link, 14px utility-copy floor, 44px targets, and axe scan.
+`npm run lint` checks the TypeScript source.
 
 The static build includes `staticwebapp.config.json`: immutable caching for
 hashed assets, media, and the downloadable ZIP; a short revalidation policy for
