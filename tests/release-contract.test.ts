@@ -24,7 +24,8 @@ describe('release regression contracts', () => {
     const routes = config.routes as Array<{ route: string; headers: Record<string, string> }>;
 
     expect(headers['Content-Security-Policy']).toContain("default-src 'self'");
-    expect(headers['Content-Security-Policy']).toContain('https://api.sociobot.in');
+    expect(headers['Content-Security-Policy']).toContain("connect-src 'self'");
+    expect(headers['Content-Security-Policy']).not.toContain('api.sociobot.in');
     expect(headers['X-Frame-Options']).toBe('DENY');
     expect(headers['Permissions-Policy']).toContain('camera=()');
     expect(headers['Cache-Control']).toContain('max-age=300');
@@ -32,6 +33,19 @@ describe('release regression contracts', () => {
       expect(routes.find((entry) => entry.route === route)?.headers['Cache-Control']).toBe('public, max-age=31536000, immutable');
     }
     expect(routes.find((entry) => entry.route === '/sw.js')?.headers['Cache-Control']).toBe('no-cache, max-age=0, must-revalidate');
+  });
+
+  it('registers every claim once and gives it one tagged browser test', async () => {
+    const claims = JSON.parse(await readFile(resolve(root, '.factory/claims.json'), 'utf8')) as Array<{ id: string; test: string }>;
+    const claimTests = await readFile(resolve(root, 'tests/claims.spec.ts'), 'utf8');
+    const ids = claims.map((claim) => claim.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const claim of claims) {
+      expect(claim.test).toContain(`@claim:${claim.id}`);
+      expect(claimTests.split(`@claim:${claim.id}`).length - 1).toBe(1);
+    }
+    const tags = [...claimTests.matchAll(/@claim:([a-z0-9-]+)/g)].map((match) => match[1]);
+    expect(tags.sort()).toEqual([...ids].sort());
   });
 
   it('keeps the extension skip target and documented size floors in source', async () => {

@@ -118,3 +118,7 @@ Provenance: generated for this product using the Param Factory Azure image
 deployment (`factory-image`) on 2026-08-27. Original generated work; no external
 reference images. The final asset and prompt sidecar live in `assets/src/`.
 
+The 1200×630 Open Graph image at `site/public/media/social-card.jpg` is a
+center crop of that original generated asset. The 180px Apple touch icon is a
+resize of the hand-authored extension mark. Both derivatives were made locally
+on 2026-08-28. The site footer discloses the generated notebook image.

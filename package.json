@@ -1,9 +1,9 @@
 {
   "name": "css-cause-map",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
-  "description": "A local-first browser extension that maps likely CSS layout causes.",
+  "description": "Find the CSS rules and parent elements causing a layout problem.",
   "scripts": {
     "dev": "wxt",
     "dev:site": "vite --config vite.site.config.ts",
@@ -16,6 +16,7 @@
     "test": "vitest run && npm run test:browser",
     "test:unit": "vitest run",
     "test:browser": "playwright test",
+    "test:claims": "playwright test tests/claims.spec.ts --project=desktop",
     "test:watch": "vitest",
     "pretypecheck": "npm run prepare:wxt",
     "typecheck": "tsc --noEmit",

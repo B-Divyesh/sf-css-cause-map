@@ -11,7 +11,7 @@
     <header class="masthead">
       <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
       <div><p class="kicker">Field sheet 01</p><h1>CSS Cause Map</h1></div>
-      <button id="settings-button" class="icon-button" type="button" aria-label="Open license and settings" title="License and settings">⌁</button>
+      <button id="settings-button" class="icon-button" type="button" aria-label="Open saved reports" title="Saved reports">⌁</button>
     </header>
     <main id="main" tabindex="-1">
       <section class="command" aria-labelledby="command-title">
@@ -51,25 +51,18 @@
           <p class="section-label">Tear-off report</p>
           <label class="check"><input id="anonymous-check" type="checkbox" /> Replace selectors with labels</label>
           <div><button id="export-json" class="secondary" type="button">Export JSON</button><button id="export-html" class="secondary" type="button">Export HTML</button></div>
-          <button id="save-report" class="text-button" type="button">Save to field log <span class="paid-tag">FIELD KIT</span></button>
-          <div id="field-note" class="field-note hidden"><label for="report-note">Private notebook note</label><textarea id="report-note" rows="3" placeholder="What did you reproduce or toggle?"></textarea></div>
+          <button id="save-report" class="text-button" type="button">Save to report log</button>
+          <div id="field-note" class="field-note"><label for="report-note">Private report note</label><textarea id="report-note" rows="3" placeholder="What did you reproduce or toggle?"></textarea></div>
         </div>
       </section>
 
       <section id="settings" class="settings hidden" aria-labelledby="settings-title">
         <button id="settings-close" class="text-button back" type="button">← Back to map</button>
-        <p class="section-label">One-time unlock</p>
-        <h2 id="settings-title">Field Kit</h2>
-        <p>Keep an unlimited local report log and add private notebook notes. Core diagnosis and both exports stay free.</p>
-        <p class="price"><strong>$12</strong> once · no subscription</p>
-        <a class="primary link-button" href="https://api.sociobot.in/api/v1/products/css-cause-map/checkout" target="_blank" rel="noreferrer">Buy Field Kit</a>
-        <form id="license-form">
-          <label for="license-input">Have a license? Paste it here</label>
-          <div class="license-row"><input id="license-input" name="license" autocomplete="off" required /><button class="secondary" type="submit">Verify</button></div>
-        </form>
-        <p id="license-state" class="micro" aria-live="polite">Free edition active.</p>
-        <section id="field-log" class="field-log hidden" aria-labelledby="field-log-title"><p class="section-label" id="field-log-title">Saved field log</p><ul id="field-log-list"></ul></section>
-        <p class="legal-note">Checkout is hosted by Sociobot; Dodo is merchant of record. Refunds are handled there and revoke the license. <a href="https://css-cause-map.sociobot.in/privacy" target="_blank">Privacy</a> · <a href="https://css-cause-map.sociobot.in/terms" target="_blank">Terms</a></p>
+        <p class="section-label">Stored in this browser</p>
+        <h2 id="settings-title">Saved reports</h2>
+        <p>Keep up to 100 cause reports and private notes in extension storage.</p>
+        <section id="field-log" class="field-log" aria-labelledby="field-log-title"><p class="section-label" id="field-log-title">Report log</p><ul id="field-log-list"></ul></section>
+        <p class="legal-note"><a href="https://css-cause-map.sociobot.in/privacy" target="_blank" rel="noreferrer">Privacy <span class="visually-hidden">(opens external site)</span></a> · <a href="https://css-cause-map.sociobot.in/terms" target="_blank" rel="noreferrer">Terms <span class="visually-hidden">(opens external site)</span></a></p>
       </section>
     </main>
     <script type="module" src="./main.ts"></script>

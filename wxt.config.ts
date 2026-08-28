@@ -6,10 +6,9 @@ export default defineConfig({
     name: 'CSS Cause Map',
     short_name: 'Cause Map',
     description: 'Trace the CSS rules and ancestor constraints most likely shaping a live element.',
-    version: '1.0.0',
+    version: '1.0.1',
     minimum_chrome_version: '116',
     permissions: ['activeTab', 'scripting', 'storage', 'sidePanel'],
-    host_permissions: ['https://api.sociobot.in/*'],
     action: {
       default_title: 'Open CSS Cause Map'
     },

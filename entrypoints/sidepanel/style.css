@@ -17,6 +17,7 @@
 }
 
 * { box-sizing: border-box; }
+.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
 body { margin: 0; min-width: 300px; min-height: 100vh; background: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgba(23, 79, 121, .075) 32px), var(--paper); font-size: 16px; }
 button, input { font: inherit; }
 button, a, input, summary { -webkit-tap-highlight-color: transparent; }
@@ -93,20 +94,12 @@ main { padding: 16px 16px calc(28px + env(safe-area-inset-bottom)); }
 .exports > div { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
 .check { display: flex; gap: 8px; align-items: center; min-height: 44px; font-size: 14px; }
 .check input { width: 18px; height: 18px; accent-color: var(--blue); }
-.paid-tag { margin-left: 4px; border: 1px solid var(--red); padding: 2px 4px; color: var(--red-deep); font-size: 14px; text-decoration: none; }
 .field-note { margin-top: 10px; }
 .field-note label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 800; }
 .field-note textarea { width: 100%; resize: vertical; border: 1px solid var(--ink); border-radius: 0; padding: 9px; color: var(--ink); background: var(--raised); font: 14px/1.5 Georgia, serif; }
 .settings { max-width: 440px; margin: 16px auto; }
 .settings > p:not(.section-label, .price, .micro, .legal-note) { font: 16px/1.55 Georgia, serif; }
 .back { margin-bottom: 18px; }
-.price { padding: 12px 0; border-block: 1px solid var(--rule); }
-.price strong { font: 700 30px Georgia, serif; }
-.settings .link-button { width: 100%; }
-.settings form { margin-top: 26px; }
-.settings label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 800; }
-.license-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
-.license-row input { min-width: 0; min-height: 44px; border: 1px solid var(--ink); border-radius: 0; background: var(--raised); padding: 8px; }
 .legal-note { margin-top: 24px; color: var(--pencil); font: 14px/1.6 Georgia, serif; }
 .legal-note a { color: var(--blue-deep); }
 .field-log { margin-top: 28px; padding-top: 18px; border-top: 2px solid var(--ink); }

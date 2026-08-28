@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f0df" />
+    <meta name="description" content="Try a private sample CSS cause report with ranked rules, measurements, parent constraints, and exports." />
+    <link rel="canonical" href="https://css-cause-map.sociobot.in/demo/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Demo — CSS Cause Map" />
+    <meta property="og:description" content="Try a sample CSS cause report without changing real browser data." />
+    <meta property="og:url" content="https://css-cause-map.sociobot.in/demo/" />
+    <meta property="og:image" content="https://css-cause-map.sociobot.in/media/social-card.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A notebook scene tracing CSS layout causes through nested paper rectangles" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Demo — CSS Cause Map" />
+    <meta name="twitter:description" content="Try a sample CSS cause report without changing real browser data." />
+    <meta name="twitter:image" content="https://css-cause-map.sociobot.in/media/social-card.jpg" />
+    <meta name="twitter:image:alt" content="A notebook scene tracing CSS layout causes through nested paper rectangles" />
+    <title>Demo — CSS Cause Map</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="demo-page">
+    <a class="skip" href="#main">Skip to main content</a>
+    <div class="demo-banner" role="status"><strong>Demo — sample data, nothing is saved to your real data</strong><span><button id="reset-demo" type="button">Reset demo</button><a href="/" id="leave-demo">Start for real</a></span></div>
+    <div id="offline-banner" class="offline-banner" role="status" hidden>You’re offline. The sample cause report still works.</div>
+    <div id="route-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="CSS Cause Map home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><b></b></span><span>CSS Cause Map</span></a>
+      <nav aria-label="Main navigation"><a href="/demo/?demo=1" aria-current="page">Demo</a><a href="/#how-it-works">How it works</a><a href="/privacy/">Privacy</a><a class="nav-download" href="/downloads/css-cause-map-chrome.zip" download>Download extension</a></nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="demo-intro" aria-labelledby="demo-title"><p class="eyebrow">Sample storefront layout problem</p><h1 id="demo-title">Inspect a sample layout gap</h1><p>A product card is too narrow because its parent grid and gap divide the available width.</p></section>
+      <section class="demo-workspace" aria-label="Interactive sample cause report">
+        <aside class="sample-page" aria-labelledby="sample-page-title">
+          <div class="sample-browser"><span aria-hidden="true">● ● ●</span><code>shop.example.test/products/summer</code></div>
+          <h2 id="sample-page-title">Selected page element</h2>
+          <div class="sample-grid" aria-label="Sample product grid"><article class="sample-card selected"><span class="selection-label">Selected · article.product-card</span><div class="sample-image" aria-hidden="true"></div><strong>Canvas daypack</strong><span>Layout sample</span></article><article class="sample-card ghost" aria-hidden="true"></article></div>
+          <p class="sample-caption">The 24 px grid gap leaves less room for each card.</p>
+        </aside>
+        <article class="cause-report" aria-labelledby="report-title">
+          <div class="report-toolbar"><div><p class="eyebrow">Cause report / sample 01</p><h2 id="report-title">Ranked CSS causes</h2></div><button id="capture-again" class="button secondary-button" type="button">Capture again</button></div>
+          <section class="demo-measurements" aria-label="Final size and position"><h3>Final size and position</h3><dl><div><dt>Width</dt><dd id="demo-width">312 px</dd></div><div><dt>Height</dt><dd>184 px</dd></div><div><dt>x / y</dt><dd>48 / 136 px</dd></div></dl><p id="comparison" class="comparison" aria-live="polite" hidden></p></section>
+          <section aria-labelledby="causes-title"><h3 id="causes-title">Rules to test</h3><ol id="demo-causes" class="demo-causes">
+            <li data-property="grid-template-columns"><span class="demo-rank">01</span><div><code>grid-template-columns: repeat(3, 1fr)</code><strong>Parent element · .results</strong><p>Reason: the parent creates three tracks that constrain this card.</p><p>Rule to test: change <code>grid-template-columns</code> to two tracks.</p></div><b>strong</b></li>
+            <li data-property="gap"><span class="demo-rank">02</span><div><code>gap: 24px</code><strong>Parent element · .results</strong><p>Reason: the parent inserts 24 px between grid tracks.</p><p>Rule to test: reduce <code>gap</code> and compare the card width.</p></div><b>strong</b></li>
+            <li data-property="max-width"><span class="demo-rank">03</span><div><code>max-width: 72rem</code><strong>Parent element · main.catalog</strong><p>Reason: the page container limits the grid’s available width.</p><p>Rule to test: remove <code>max-width</code> in DevTools.</p></div><b>likely</b></li>
+          </ol></section>
+          <section class="parent-evidence" aria-labelledby="parents-title" tabindex="0"><h3 id="parents-title">Parent element constraints</h3><table><thead><tr><th>Parent element</th><th>Layout</th><th>Width</th></tr></thead><tbody><tr><td><code>section.results</code></td><td>grid · 3 columns</td><td>984 px</td></tr><tr><td><code>main.catalog</code></td><td>block · max 72rem</td><td>1152 px</td></tr></tbody></table></section>
+          <section class="change-evidence" aria-labelledby="changes-title"><h3 id="changes-title">Changes between captures</h3><p id="changes-copy">No changes yet. Choose “Capture again” to load the sample after-state.</p></section>
+          <p class="caveat">This report ranks visible CSS evidence. It does not reveal Chrome’s internal layout decisions.</p>
+          <section class="demo-exports" aria-labelledby="exports-title"><div><h3 id="exports-title">Export the sample report</h3><label><input id="anonymous-selectors" type="checkbox" /> Replace CSS selectors with anonymous labels</label></div><span><button id="export-json" class="button secondary-button" type="button">Export JSON</button><button id="export-html" class="button secondary-button" type="button">Export HTML</button></span><p id="export-status" class="export-status" aria-live="polite"></p></section>
+        </article>
+      </section>
+    </main>
+    <footer><div><a class="brand" href="/"><span class="brand-mark small" aria-hidden="true"><i></i><i></i><b></b></span><span>CSS Cause Map</span></a><p>Find the CSS rules and parent elements shaping a selected element.</p><p class="build-id">Built by Param Factory · Version 1.0.1 · Notebook image generated for this product.</p></div><nav aria-label="Footer navigation"><a href="/demo/?demo=1">Demo</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/B-Divyesh/sf-css-cause-map" rel="external">View source on GitHub <span class="sr-only">(external site)</span></a></nav></footer>
+    <script type="module" src="/demo/demo.ts"></script>
+  </body>
+</html>

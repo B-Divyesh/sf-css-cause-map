@@ -1,0 +1,79 @@
+[
+  {
+    "id": "ranked-cause-report",
+    "claim": "Ranks visible CSS rules and parent elements with final measurements, reasons, and a rule to test.",
+    "where": "landing cause-report and how-it-works sections, demo, README, terms, extension side panel",
+    "test": "npm run test:claims -- --grep @claim:ranked-cause-report",
+    "sandbox": "fresh browser context at /demo/?demo=1; assert the selected element, measurements, ordered causes, parents, reasons, and rules to test"
+  },
+  {
+    "id": "demo-isolation",
+    "claim": "The sample uses only demo-prefixed storage and does not change real data.",
+    "where": "landing page, demo banner, privacy, README, demo.md",
+    "test": "npm run test:claims -- --grep @claim:demo-isolation",
+    "sandbox": "seed a normal localStorage key, exercise and reset the demo, assert the normal key remains and every new key begins demo:"
+  },
+  {
+    "id": "offline-core",
+    "claim": "Core analysis works offline after the first visit.",
+    "where": "landing first-screen facts, demo, README, demo.md",
+    "test": "npm run test:claims -- --grep @claim:offline-core",
+    "sandbox": "fresh browser context; obtain service-worker control, switch offline, reload the demo, capture again, and assert the result"
+  },
+  {
+    "id": "private-exports",
+    "claim": "HTML and JSON exports remove page text and URL query details; selectors can be replaced with labels.",
+    "where": "landing, demo, privacy, README, demo.md",
+    "test": "npm run test:claims -- --grep @claim:private-exports",
+    "sandbox": "download both formats from demo data and assert records exist while page text, query secrets, fragments, and opted-out selectors do not"
+  },
+  {
+    "id": "capture-comparison",
+    "claim": "Capturing again shows measurement and page changes.",
+    "where": "landing, demo, README, demo.md",
+    "test": "npm run test:claims -- --grep @claim:capture-comparison",
+    "sandbox": "fresh demo; capture again and assert the exact before/after width delta and recorded class change"
+  },
+  {
+    "id": "free-core",
+    "claim": "Analysis, saved reports, and both export formats are free.",
+    "where": "landing first-screen facts, terms, README",
+    "test": "npm run test:claims -- --grep @claim:free-core",
+    "sandbox": "fresh context without license state; exercise sample analysis and both downloads and assert there is no payment gate or checkout link"
+  },
+  {
+    "id": "privacy-boundaries",
+    "claim": "Analysis stays in Chrome with no analytics, page upload, website host permission, or extension network request.",
+    "where": "landing first-screen facts and privacy section, privacy, README, extension side panel",
+    "test": "npm run test:claims -- --grep @claim:privacy-boundaries",
+    "sandbox": "intercept the complete demo flow and assert every request is same-origin; inspect the built manifest for no host permission"
+  },
+  {
+    "id": "manifest-permissions",
+    "claim": "The extension requests activeTab, scripting, storage, and sidePanel with no website host permission.",
+    "where": "privacy, README",
+    "test": "npm run test:claims -- --grep @claim:manifest-permissions",
+    "sandbox": "build the extension and assert the exact MV3 permission set, no host_permissions, and no content_scripts"
+  },
+  {
+    "id": "picker-inputs",
+    "claim": "The picker starts only when chosen, selects a live element with a pointer or Tab and Enter, and Escape cancels it.",
+    "where": "landing how-it-works section, privacy, README, extension side panel and picker",
+    "test": "npm run test:claims -- --grep @claim:picker-inputs",
+    "sandbox": "load the packaged extension against a local fixture, select by pointer, select by Tab and Enter, and cancel with Escape"
+  },
+  {
+    "id": "local-report-log",
+    "claim": "Stores up to 100 cause reports and private notes in extension storage.",
+    "where": "extension saved-reports screen, privacy, README",
+    "test": "npm run test:claims -- --grep @claim:local-report-log",
+    "sandbox": "load the packaged extension, send a sample report to the side panel, save a note, and assert chrome.storage.local contains the report and note"
+  },
+  {
+    "id": "production-build",
+    "claim": "The production build creates an unpacked MV3 extension, package ZIP, and deployable site with the download.",
+    "where": "README",
+    "test": "npm run test:claims -- --grep @claim:production-build",
+    "sandbox": "run npm run build, assert all outputs, inspect the MV3 manifest, and test ZIP integrity"
+  }
+]

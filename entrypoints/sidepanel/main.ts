@@ -1,6 +1,5 @@
 import { browser } from 'wxt/browser';
 import { reportAsHtml, reportAsJson } from '../../src/shared/export';
-import { BUY_URL, cachedVerdict, LICENSE_KEY, saveLicense, verifyLicense } from '../../src/shared/license';
 import type { AnalysisReport, Cause, ExtensionMessage } from '../../src/shared/types';
 
 const byId = <T extends HTMLElement>(id: string): T => document.getElementById(id) as T;
@@ -12,7 +11,6 @@ const settings = byId('settings');
 const notice = byId('notice');
 const statusCopy = byId('status-copy');
 let report: AnalysisReport | null = null;
-let licensed = false;
 interface SavedEntry { report: AnalysisReport; note: string; savedAt: string }
 
 browser.runtime.onMessage.addListener((message: ExtensionMessage) => {
@@ -34,9 +32,6 @@ byId('export-html').addEventListener('click', () => report && download('css-caus
 byId('save-report').addEventListener('click', saveReport);
 byId('settings-button').addEventListener('click', openSettings);
 byId('settings-close').addEventListener('click', closeSettings);
-byId<HTMLFormElement>('license-form').addEventListener('submit', restoreLicense);
-
-void initializeLicense();
 
 async function startPicker(): Promise<void> {
   setPickerState('picking', 'Hover and click an element. Press Escape to cancel.');
@@ -137,16 +132,11 @@ function download(filename: string, body: string, type: string): void {
 
 async function saveReport(): Promise<void> {
   if (!report) return;
-  if (!licensed) {
-    openSettings();
-    showNotice('Field Kit unlocks the local report log. Both file exports remain free.', false);
-    return;
-  }
   const stored = await browser.storage.local.get('ccm_report_log');
   const log = Array.isArray(stored.ccm_report_log) ? stored.ccm_report_log as SavedEntry[] : [];
   log.unshift({ report, note: byId<HTMLTextAreaElement>('report-note').value.trim(), savedAt: new Date().toISOString() });
   await browser.storage.local.set({ ccm_report_log: log.slice(0, 100) });
-  showNotice('Saved locally to your Field Kit log.', false);
+  showNotice('Saved locally to your report log.', false);
   byId<HTMLTextAreaElement>('report-note').value = '';
   await renderLog();
 }
@@ -155,48 +145,12 @@ function openSettings(): void {
   emptyState.classList.add('hidden');
   results.classList.add('hidden');
   settings.classList.remove('hidden');
-  byId('settings').querySelector<HTMLAnchorElement>('a[href*="checkout"]')!.href = BUY_URL;
   void renderLog();
 }
 
 function closeSettings(): void {
   settings.classList.add('hidden');
   (report ? results : emptyState).classList.remove('hidden');
-}
-
-async function initializeLicense(): Promise<void> {
-  const token = localStorage.getItem(LICENSE_KEY);
-  const cache = cachedVerdict();
-  licensed = Boolean(token && cache?.valid);
-  updateLicenseCopy(cache?.reason);
-  if (token) {
-    const verdict = await verifyLicense(token);
-    licensed = verdict.valid;
-    updateLicenseCopy(verdict.reason);
-  }
-}
-
-async function restoreLicense(event: SubmitEvent): Promise<void> {
-  event.preventDefault();
-  const input = byId<HTMLInputElement>('license-input');
-  if (!input.value.trim()) return;
-  byId('license-state').textContent = 'Checking license…';
-  saveLicense(input.value);
-  const verdict = await verifyLicense(input.value.trim(), localStorage, true);
-  licensed = verdict.valid;
-  updateLicenseCopy(verdict.reason);
-  if (licensed) input.value = '';
-}
-
-function updateLicenseCopy(reason?: string): void {
-  const output = byId('license-state');
-  if (licensed) output.textContent = '✓ Field Kit is active on this browser.';
-  else if (reason === 'offline') output.textContent = 'Could not verify while offline. The free map still works.';
-  else if (reason && reason !== 'ok') output.innerHTML = `License no longer active (${reason.replace('_', ' ')}). <a href="${BUY_URL}" target="_blank">Get a license</a>.`;
-  else output.textContent = 'Free edition active.';
-  byId('field-note').classList.toggle('hidden', !licensed);
-  byId('field-log').classList.toggle('hidden', !licensed);
-  void renderLog();
 }
 
 function showNotice(message: string, isError: boolean): void {
@@ -207,7 +161,6 @@ function showNotice(message: string, isError: boolean): void {
 }
 
 async function renderLog(): Promise<void> {
-  if (!licensed) return;
   const stored = await browser.storage.local.get('ccm_report_log');
   const entries = Array.isArray(stored.ccm_report_log) ? stored.ccm_report_log as SavedEntry[] : [];
   const list = byId<HTMLUListElement>('field-log-list');
