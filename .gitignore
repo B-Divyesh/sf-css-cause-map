@@ -8,5 +8,6 @@ node_modules/
 .output/
 dist/
 .wxt/
+test-results/
 site/public/downloads/*.zip
 *.log
