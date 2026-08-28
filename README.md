@@ -32,6 +32,7 @@ npm install
 npm run dev          # WXT extension dev server
 npm run dev:site     # landing page
 npm run typecheck
+npm run lint
 npm test
 npm run build
 ```
@@ -57,9 +58,17 @@ It requests no blanket website host permission.
 
 ## Testing
 
-`npm test` runs deterministic ranker tests against 20 seeded layout scenarios
-(flex, grid, clamps, box model, margin, transform, and positioning) plus report
-privacy/escaping tests. `npm run typecheck` checks the extension, site, and tests.
+`npm run typecheck` always prepares WXT's generated declarations first, so it
+works from a fresh checkout. `npm test` runs deterministic ranker tests against
+20 seeded layout scenarios (flex, grid, clamps, box model, margin, transform,
+and positioning), report privacy/escaping tests, and Playwright checks at
+desktop and 390px: skip-link focus, axe accessibility, no horizontal overflow,
+same-origin first-load requests, and an offline PWA reload. `npm run lint`
+checks the TypeScript source.
+
+The static build includes `staticwebapp.config.json`: immutable caching for
+hashed assets, media, and the downloadable ZIP; a short revalidation policy for
+HTML; and restrictive CSP, frame, permissions, nosniff, and referrer policies.
 
 For a manual smoke test, select elements in flex and grid layouts, change a
 class or viewport size, press **Recapture**, and export both formats. Verify the
