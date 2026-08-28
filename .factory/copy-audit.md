@@ -1,4 +1,4 @@
-# Copy audit — polish round 1
+# Copy audit — polish round 2
 
 Audited on 2026-08-28. Counts treat hyphenated terms and CSS values as one word. No sentence exceeds 22 words. No banned marketing word appears.
 
@@ -36,7 +36,19 @@ All headings state a task or section directly. The primary action is “Try it w
 
 ## README check
 
-Every README sentence is 22 words or fewer. The prior dense test, build, privacy, and technical sentences were split into one idea each.
+Every README sentence is 22 words or fewer. The round 2 test and deployment lines are direct instructions: “Run `npm test`.” and “Deploy the static contents of `dist/site/`.”
+
+## Round 2 product copy
+
+| Words | Sentence | Result |
+| ---: | --- | --- |
+| 15 | Use Clear report log in Saved reports to delete every saved report and private note. | Pass; `@claim:local-data-deletion` |
+| 10 | Deletes every saved report and private note from this browser. | Pass; control help text |
+| 13 | Choose Confirm clear report log to delete every saved report and private note. | Pass; specific confirmation |
+| 3 | Report log cleared. | Pass; confirmed result |
+| 8 | All saved reports and private notes were deleted. | Pass; confirmed result |
+
+The catalog line is 93 characters, starts with “Trace,” and names the job without marketing words.
 
 ## Terminology
 

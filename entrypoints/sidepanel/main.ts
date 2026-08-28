@@ -10,7 +10,9 @@ const results = byId('results');
 const settings = byId('settings');
 const notice = byId('notice');
 const statusCopy = byId('status-copy');
+const clearReportLogButton = byId<HTMLButtonElement>('clear-report-log');
 let report: AnalysisReport | null = null;
+let clearLogArmed = false;
 interface SavedEntry { report: AnalysisReport; note: string; savedAt: string }
 
 browser.runtime.onMessage.addListener((message: ExtensionMessage) => {
@@ -32,6 +34,7 @@ byId('export-html').addEventListener('click', () => report && download('css-caus
 byId('save-report').addEventListener('click', saveReport);
 byId('settings-button').addEventListener('click', openSettings);
 byId('settings-close').addEventListener('click', closeSettings);
+clearReportLogButton.addEventListener('click', clearReportLog);
 
 async function startPicker(): Promise<void> {
   setPickerState('picking', 'Hover and click an element. Press Escape to cancel.');
@@ -149,8 +152,27 @@ function openSettings(): void {
 }
 
 function closeSettings(): void {
+  resetClearLogConfirmation();
   settings.classList.add('hidden');
   (report ? results : emptyState).classList.remove('hidden');
+}
+
+async function clearReportLog(): Promise<void> {
+  if (!clearLogArmed) {
+    clearLogArmed = true;
+    clearReportLogButton.textContent = 'Confirm clear report log';
+    showNotice('Choose Confirm clear report log to delete every saved report and private note.', true);
+    return;
+  }
+  await browser.storage.local.remove('ccm_report_log');
+  resetClearLogConfirmation();
+  await renderLog();
+  showNotice('Report log cleared. All saved reports and private notes were deleted.', false);
+}
+
+function resetClearLogConfirmation(): void {
+  clearLogArmed = false;
+  clearReportLogButton.textContent = 'Clear report log';
 }
 
 function showNotice(message: string, isError: boolean): void {
@@ -169,8 +191,10 @@ async function renderLog(): Promise<void> {
     item.className = 'micro';
     item.textContent = 'No saved reports yet.';
     list.replaceChildren(item);
+    clearReportLogButton.disabled = true;
     return;
   }
+  clearReportLogButton.disabled = false;
   list.replaceChildren(...entries.map((entry) => {
     const item = document.createElement('li');
     const button = document.createElement('button');

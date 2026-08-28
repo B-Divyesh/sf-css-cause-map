@@ -60,11 +60,11 @@ The extension requests `activeTab`, `scripting`, `storage`, and `sidePanel`. It 
 
 ## Test and deploy
 
-Run `npm test` for unit, claim, browser, mobile, accessibility, privacy, and offline checks. Run `npm run build` before deployment.
+Run `npm test`. Run `npm run build` before deployment.
 
 Each product promise is registered in [.factory/claims.json](.factory/claims.json). Run any listed command from a clean checkout to verify that promise.
 
-Deploy the static contents of `dist/site/`. The deployment configuration adds cache and security headers.
+Deploy the static contents of `dist/site/`.
 
 ## Product records
 

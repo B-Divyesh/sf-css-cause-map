@@ -46,8 +46,11 @@ test('packaged side panel transfers skip-link focus and meets its documented min
     const undersizedTargets = await page.locator('a, button, input, summary').evaluateAll((elements) => elements.flatMap((element) => {
       const style = getComputedStyle(element);
       if (style.display === 'none' || style.visibility === 'hidden' || !element.getClientRects().length) return [];
-      const height = element.getBoundingClientRect().height;
-      return height < 44 ? [{ label: element.getAttribute('aria-label') ?? element.textContent?.trim() ?? element.tagName, height }] : [];
+      if (element instanceof HTMLInputElement && ['checkbox', 'radio'].includes(element.type) && element.closest('label')) return [];
+      const { width, height } = element.getBoundingClientRect();
+      return width < 44 || height < 44
+        ? [{ label: element.getAttribute('aria-label') ?? element.textContent?.trim() ?? element.tagName, width, height }]
+        : [];
     }));
     expect(undersizedTargets).toEqual([]);
   } finally {

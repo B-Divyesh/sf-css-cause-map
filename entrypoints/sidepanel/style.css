@@ -107,6 +107,9 @@ main { padding: 16px 16px calc(28px + env(safe-area-inset-bottom)); }
 .field-log button { width: 100%; border: 0; border-bottom: 1px solid var(--rule); padding: 10px 0; color: var(--ink); background: transparent; text-align: left; }
 .field-log button code { display: block; color: var(--blue-deep); }
 .field-log button span { color: var(--pencil); font-size: 14px; }
+.clear-log { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.clear-log button { min-width: 44px; }
+.clear-log button:disabled { cursor: not-allowed; opacity: .55; }
 
 @keyframes note-in { from { opacity: 0; transform: translateY(4px); } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }

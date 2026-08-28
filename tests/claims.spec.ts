@@ -235,6 +235,49 @@ test('@claim:local-report-log saves private notes and keeps the newest 100 repor
   }
 });
 
+test('@claim:local-data-deletion clears every saved report and private note', async () => {
+  const extensionPath = resolve(root, '.output/chrome-mv3');
+  const profile = await mkdtemp(resolve(tmpdir(), 'css-cause-map-delete-'));
+  const context = await chromium.launchPersistentContext(profile, {
+    channel: 'chromium',
+    headless: true,
+    args: [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`]
+  });
+  try {
+    const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
+    const extensionUrl = new URL(worker.url());
+    const page = await context.newPage();
+    await page.goto(`${extensionUrl.protocol}//${extensionUrl.host}/sidepanel.html`);
+    await page.evaluate(async () => chrome.storage.local.set({
+      ccm_report_log: [{
+        report: {
+          schema: 'css-cause-map/v1', capturedAt: '2026-08-28T00:00:00.000Z', page: { url: 'https://example.test/layout' },
+          target: { selector: 'article.private-card', tag: 'article' },
+          box: { x: 1, y: 2, width: 312, height: 184, margin: ['0px', '0px', '0px', '0px'], padding: ['8px', '8px', '8px', '8px'], border: ['0px', '0px', '0px', '0px'] },
+          causes: [], ancestors: [], changes: [], caveat: 'Visible evidence.'
+        },
+        note: 'Private customer reproduction note',
+        savedAt: '2026-08-28T00:00:00.000Z'
+      }]
+    }));
+    await page.getByRole('button', { name: 'Open saved reports' }).click();
+    await expect(page.getByText('article.private-card')).toBeVisible();
+    await expect(page.getByText('Private customer reproduction note', { exact: false })).toBeVisible();
+    await page.getByRole('button', { name: 'Clear report log' }).click();
+    await page.getByRole('button', { name: 'Confirm clear report log' }).click();
+    await expect(page.locator('#notice')).toContainText('All saved reports and private notes were deleted.');
+    expect(await page.evaluate(async () => (await chrome.storage.local.get('ccm_report_log')).ccm_report_log)).toBeUndefined();
+    await page.reload();
+    await page.getByRole('button', { name: 'Open saved reports' }).click();
+    await expect(page.getByText('No saved reports yet.')).toBeVisible();
+    await expect(page.getByText('article.private-card')).toHaveCount(0);
+    await expect(page.getByText('Private customer reproduction note', { exact: false })).toHaveCount(0);
+  } finally {
+    await context.close();
+    await rm(profile, { recursive: true, force: true });
+  }
+});
+
 test('@claim:production-build creates the complete extension and static package', async () => {
   await access(resolve(root, '.output/chrome-mv3/manifest.json'));
   await access(resolve(root, '.output/css-cause-map-1.0.1-chrome.zip'));

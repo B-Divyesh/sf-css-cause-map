@@ -11,12 +11,15 @@ async function visibleTextBelow(page: import('@playwright/test').Page, minimum: 
   }), minimum);
 }
 
-async function undersizedTargets(page: import('@playwright/test').Page, minimum: number): Promise<Array<{ label: string; height: number }>> {
+async function undersizedTargets(page: import('@playwright/test').Page, minimum: number): Promise<Array<{ label: string; width: number; height: number }>> {
   return page.locator('a, button, input, summary').evaluateAll((elements, minimumSize) => elements.flatMap((element) => {
     const style = getComputedStyle(element);
     if (style.display === 'none' || style.visibility === 'hidden' || !element.getClientRects().length) return [];
-    const height = element.getBoundingClientRect().height;
-    return height < minimumSize ? [{ label: element.getAttribute('aria-label') ?? element.textContent?.trim() ?? element.tagName, height }] : [];
+    if (element instanceof HTMLInputElement && ['checkbox', 'radio'].includes(element.type) && element.closest('label')) return [];
+    const { width, height } = element.getBoundingClientRect();
+    return width < minimumSize || height < minimumSize
+      ? [{ label: element.getAttribute('aria-label') ?? element.textContent?.trim() ?? element.tagName, width, height }]
+      : [];
   }), minimum);
 }
 
@@ -42,6 +45,7 @@ test('landing page stays accessible and contained at the configured viewport', a
   expect(await page.locator('h1').count()).toBe(1);
   expect(await page.locator('main').count()).toBe(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  expect(await page.locator('main').evaluate((main) => main.scrollWidth <= main.clientWidth)).toBe(true);
   expect(await visibleTextBelow(page, 16)).toEqual([]);
   expect(await undersizedTargets(page, 44)).toEqual([]);
   expect([...requestOrigins]).toEqual([new URL(page.url()).origin]);
@@ -57,9 +61,23 @@ test('demo is accessible, contained, and uses the notebook layout', async ({ pag
   expect(await page.locator('h1').count()).toBe(1);
   expect(await page.locator('main').count()).toBe(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  expect(await page.locator('main').evaluate((main) => main.scrollWidth <= main.clientWidth)).toBe(true);
   expect(await visibleTextBelow(page, 16)).toEqual([]);
   expect(await undersizedTargets(page, 44)).toEqual([]);
   expect(errors).toEqual([]);
+});
+
+test('one click exposes the first ranked cause in the 390 by 844 viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Try it with sample data' }).click();
+  await expect(page).toHaveURL('/demo/?demo=1');
+  const reportTitle = await page.locator('#report-title').boundingBox();
+  const firstCause = await page.locator('#demo-causes > li').first().boundingBox();
+  expect(reportTitle, 'report heading has a layout box').not.toBeNull();
+  expect(firstCause, 'first ranked cause has a layout box').not.toBeNull();
+  expect(reportTitle!.y).toBeLessThan(844);
+  expect(firstCause!.y).toBeLessThan(844);
 });
 
 test('each route has unique metadata and the shared skeleton', async ({ page }) => {

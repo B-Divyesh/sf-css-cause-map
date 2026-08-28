@@ -15,6 +15,7 @@
     "pretest": "npm run prepare:wxt",
     "test": "vitest run && npm run test:browser",
     "test:unit": "vitest run",
+    "pretest:claims": "npm run prepare:wxt",
     "test:browser": "playwright test",
     "test:claims": "playwright test tests/claims.spec.ts --project=desktop",
     "test:watch": "vitest",

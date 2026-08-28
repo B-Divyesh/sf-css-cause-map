@@ -1,1 +1,1 @@
-Find the CSS rules and parent elements causing an element’s size, position, or unwanted gap.
+Trace the CSS rules and parent elements causing an element’s size, position, or unwanted gap.

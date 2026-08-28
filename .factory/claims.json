@@ -70,6 +70,13 @@
     "sandbox": "load the packaged extension, send a sample report to the side panel, save a note, and assert chrome.storage.local contains the report and note"
   },
   {
+    "id": "local-data-deletion",
+    "claim": "Clear report log deletes every saved report and private note from extension storage.",
+    "where": "extension saved-reports screen, privacy",
+    "test": "npm run test:claims -- --grep @claim:local-data-deletion",
+    "sandbox": "load the packaged extension, save a report and private note, confirm Clear report log, reload, and assert the storage key and visible report are absent"
+  },
+  {
     "id": "production-build",
     "claim": "The production build creates an unpacked MV3 extension, package ZIP, and deployable site with the download.",
     "where": "README",

@@ -9,13 +9,14 @@ async function jsonFile(path: string): Promise<Record<string, unknown>> {
 }
 
 describe('release regression contracts', () => {
-  it('prepares WXT types before both clean local quality gates', async () => {
+  it('prepares WXT types before every clean local quality gate', async () => {
     const packageJson = await jsonFile('package.json');
     const scripts = packageJson.scripts as Record<string, string>;
 
     expect(scripts['prepare:wxt']).toBe('wxt prepare');
     expect(scripts.pretypecheck).toContain('prepare:wxt');
     expect(scripts.pretest).toContain('prepare:wxt');
+    expect(scripts['pretest:claims']).toContain('prepare:wxt');
   });
 
   it('ships static-site response policies with immutable asset caching', async () => {
