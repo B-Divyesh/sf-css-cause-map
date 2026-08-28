@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f0df" />
+    <meta name="description" content="Rank the CSS rules and parent elements most likely shaping an element's size, position, or gap." />
+    <link rel="canonical" href="https://css-cause-map.sociobot.in/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Cause Map — rank CSS rules shaping layout gaps" />
+    <meta property="og:description" content="Rank the CSS rules and parent elements shaping a selected element." />
+    <meta property="og:url" content="https://css-cause-map.sociobot.in/" />
+    <meta property="og:image" content="https://css-cause-map.sociobot.in/media/social-card.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A notebook scene tracing CSS layout relationships through nested paper rectangles" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CSS Cause Map — rank CSS rules shaping layout gaps" />
+    <meta name="twitter:description" content="Rank the CSS rules and parent elements shaping a selected element." />
+    <meta name="twitter:image" content="https://css-cause-map.sociobot.in/media/social-card.jpg" />
+    <meta name="twitter:image:alt" content="A notebook scene tracing CSS layout relationships through nested paper rectangles" />
+    <title>CSS Cause Map — rank CSS rules shaping layout gaps</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/media/hero-lab-640.webp" as="image" type="image/webp" media="(max-width: 700px)" />
+    <script type="module" crossorigin src="/assets/style-YxhBMMPP.js"></script>
+    <script type="module" crossorigin src="/assets/main-7eA6wpOe.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/style-COmsoXNR.css">
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to main content</a>
+    <div id="offline-banner" class="offline-banner" role="status" hidden>You’re offline. The saved product and demo pages remain available.</div>
+    <div id="route-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="CSS Cause Map home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><b></b></span><span>CSS Cause Map</span></a>
+      <nav aria-label="Main navigation"><a href="/demo/?demo=1">Demo</a><a href="/#how-it-works">How it works</a><a href="/privacy/">Privacy</a><a class="nav-download" href="/downloads/css-cause-map-chrome.zip" download>Download extension</a></nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">CSS layout diagnosis for frontend developers</p>
+          <h1 id="hero-title">Rank the CSS rules shaping a layout gap</h1>
+          <p class="lede">For frontend developers debugging live layouts, rank the rules and parent elements most likely shaping the selected element.</p>
+          <div class="hero-actions"><a class="button primary" href="/demo/?demo=1">Try it with sample data</a><a class="button secondary-button" href="/downloads/css-cause-map-chrome.zip" download>Download the Chrome extension</a></div>
+          <p class="action-note">See a ranked cause report immediately. Nothing is saved to your real data.</p>
+          <ul class="hero-facts" aria-label="Product facts"><li>Core analysis works offline.</li><li>Analysis stays in Chrome.</li><li>Core analysis and exports are free.</li></ul>
+        </div>
+        <figure class="hero-figure">
+          <picture>
+            <source media="(max-width: 700px)" srcset="/media/hero-lab-640.webp" type="image/webp" />
+            <source srcset="/media/hero-lab-1280.webp" type="image/webp" />
+            <img src="/media/hero-lab-1280.jpg" width="1280" height="853" alt="Nested paper rectangles connect to red and blue measurement lines in a CSS debugging notebook" fetchpriority="high" decoding="async" />
+          </picture>
+          <figcaption><span>Fig. 01</span> Trace one layout effect through its parent elements.</figcaption>
+        </figure>
+      </section>
+
+      <section id="how-it-works" class="method section" aria-labelledby="method-title">
+        <div class="section-intro"><p class="eyebrow">Three diagnosis steps</p><h2 id="method-title">Find a CSS rule to test next</h2><p>See computed styles, layout measurements, and parent constraints in one cause report.</p></div>
+        <ol class="method-list">
+          <li><span>01</span><div><h3>Select the affected element</h3><p>Open the side panel. Select the element with a pointer, or use Tab and Enter.</p></div></li>
+          <li><span>02</span><div><h3>Review the ranked CSS causes</h3><p>See the CSS rules and parent settings ranked by likely effect.</p></div></li>
+          <li><span>03</span><div><h3>Capture the change and export</h3><p>Reproduce the layout problem. Capture again, then export a private HTML or JSON report.</p></div></li>
+        </ol>
+      </section>
+
+      <section class="specimen section" aria-labelledby="specimen-title">
+        <div class="specimen-copy"><p class="eyebrow">Inside the cause report</p><h2 id="specimen-title">See the strongest CSS constraint first</h2><p>Scores rank visible CSS evidence. They do not reveal Chrome’s internal layout decisions.</p><ul><li>Final size and position</li><li>Matched CSS rule</li><li>Parent element constraints</li><li>Changes between captures</li></ul><a class="text-link" href="/demo/?demo=1">Open the sample cause report →</a></div>
+        <div class="report-demo" aria-label="Example cause report">
+          <div class="report-head"><p>Selected element</p><code>article.product-card</code><span>312 × 184 px</span></div>
+          <ol>
+            <li class="active"><i>01</i><div><code>grid-template-columns</code><strong>repeat(3, 1fr)</strong><p>The parent creates three tracks that constrain this card.</p><small>.results · /styles/catalog.css</small></div><b>strong</b></li>
+            <li><i>02</i><div><code>gap</code><strong>24px</strong></div><b>strong</b></li>
+            <li><i>03</i><div><code>max-width</code><strong>72rem</strong></div><b>likely</b></li>
+          </ol>
+          <p class="margin-note">visible CSS evidence<br />≠ internal decisions</p>
+        </div>
+      </section>
+
+      <section class="privacy-strip section" aria-labelledby="privacy-title"><div class="privacy-seal" aria-hidden="true">LOCAL<br />ONLY</div><div><p class="eyebrow">Privacy boundaries</p><h2 id="privacy-title">What the extension does not collect</h2><p>There are no accounts, analytics, page uploads, or broad site permissions. Exports remove page text and URL queries. You can replace CSS selectors with anonymous labels.</p></div><a class="text-link" href="/privacy/">Read the privacy policy →</a></section>
+
+      <section class="final-note section" aria-labelledby="download-title"><p class="eyebrow">Ready for a live page?</p><h2 id="download-title">Find the CSS rule to test next</h2><a class="button primary" href="/downloads/css-cause-map-chrome.zip" download>Download CSS Cause Map</a><p>Install the ZIP as an unpacked Chrome extension.</p></section>
+    </main>
+    <footer><div><a class="brand" href="/"><span class="brand-mark small" aria-hidden="true"><i></i><i></i><b></b></span><span>CSS Cause Map</span></a><p>Find the CSS rules and parent elements shaping a selected element.</p><p class="build-id">Built by Param Factory · Version 1.0.1 · Notebook image generated for this product.</p></div><nav aria-label="Footer navigation"><a href="/demo/?demo=1">Demo</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/B-Divyesh/sf-css-cause-map" rel="external">View source on GitHub <span class="sr-only">(external site)</span></a></nav></footer>
+  </body>
+</html>
