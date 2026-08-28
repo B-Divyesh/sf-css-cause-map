@@ -33,7 +33,7 @@ describe('release regression contracts', () => {
     expect(headers['X-Frame-Options']).toBe('DENY');
     expect(headers['Permissions-Policy']).toContain('camera=()');
     expect(headers['Cache-Control']).toContain('max-age=300');
-    expect(responseOverrides['404'].rewrite).toBe('/404/index.html');
+    expect(responseOverrides['404']?.rewrite).toBe('/404/index.html');
     for (const route of ['/assets/*', '/media/*', '/downloads/*']) {
       expect(routes.find((entry) => entry.route === route)?.headers['Cache-Control']).toBe('public, max-age=31536000, immutable');
     }
