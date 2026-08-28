@@ -2,16 +2,16 @@
   {
     "id": "ranked-cause-report",
     "claim": "Ranks visible CSS rules and parent elements with final measurements, reasons, and a rule to test.",
-    "where": "landing cause-report and how-it-works sections, demo, README, terms, extension side panel",
+    "where": "landing hero, title, metadata, cause-report and how-it-works sections; catalog; package descriptions; demo; README; terms; extension side panel",
     "test": "npm run test:claims -- --grep @claim:ranked-cause-report",
-    "sandbox": "fresh browser context at /demo/?demo=1; assert the selected element, measurements, ordered causes, parents, reasons, and rules to test"
+    "sandbox": "fresh browser context at / and /demo/?demo=1; assert honest rank/shaping copy, the selected element, measurements, ordered causes, parents, reasons, and rules to test"
   },
   {
     "id": "demo-isolation",
     "claim": "The sample uses only demo-prefixed storage and does not change real data.",
     "where": "landing page, demo banner, privacy, README, demo.md",
     "test": "npm run test:claims -- --grep @claim:demo-isolation",
-    "sandbox": "seed a normal localStorage key, exercise and reset the demo, assert the normal key remains and every new key begins demo:"
+    "sandbox": "fresh browser at /?demo=1; assert redirect to /demo/?demo=1, seed a normal localStorage key, exercise and reset the demo, assert the normal key remains and every new key begins demo:"
   },
   {
     "id": "offline-core",
@@ -36,7 +36,7 @@
   },
   {
     "id": "free-core",
-    "claim": "Analysis, saved reports, and both export formats are free.",
+    "claim": "Analysis and both export formats are free.",
     "where": "landing first-screen facts, terms, README",
     "test": "npm run test:claims -- --grep @claim:free-core",
     "sandbox": "fresh context without license state; exercise sample analysis and both downloads and assert there is no payment gate or checkout link"

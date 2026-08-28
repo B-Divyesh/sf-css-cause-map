@@ -1,4 +1,4 @@
-const CACHE = 'css-cause-map-v2';
+const CACHE = 'css-cause-map-v3';
 const SHELL = ['/', '/demo/?demo=1', '/privacy/', '/terms/', '/404/', '/media/hero-lab-640.webp', '/icon.svg', '/apple-touch-icon.png'];
 self.addEventListener('install', (event) => event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL))));
 self.addEventListener('activate', (event) => event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))));

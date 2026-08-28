@@ -5,7 +5,7 @@ export default defineConfig({
   manifest: {
     name: 'CSS Cause Map',
     short_name: 'Cause Map',
-    description: 'Trace the CSS rules and ancestor constraints most likely shaping a live element.',
+    description: 'Rank the CSS rules and parent elements shaping a live layout.',
     version: '1.0.1',
     minimum_chrome_version: '116',
     permissions: ['activeTab', 'scripting', 'storage', 'sidePanel'],

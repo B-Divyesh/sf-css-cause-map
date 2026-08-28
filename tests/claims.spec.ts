@@ -15,6 +15,24 @@ test.beforeAll(async () => {
 });
 
 test('@claim:ranked-cause-report renders the complete sample evidence', async ({ page }) => {
+  await page.goto('/');
+  await expect(page).toHaveTitle('CSS Cause Map — rank CSS rules shaping layout gaps');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Rank the CSS rules shaping a layout gap');
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    'content',
+    "Rank the CSS rules and parent elements most likely shaping an element's size, position, or gap."
+  );
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'CSS Cause Map — rank CSS rules shaping layout gaps');
+  await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', 'CSS Cause Map — rank CSS rules shaping layout gaps');
+
+  const packageJson = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8')) as { description: string };
+  const manifestSource = await readFile(resolve(root, 'wxt.config.ts'), 'utf8');
+  const catalog = (await readFile(resolve(root, '.factory/catalog-description.txt'), 'utf8')).trim();
+  expect(packageJson.description).toBe('Rank the CSS rules and parent elements shaping a layout problem.');
+  expect(manifestSource).toContain("description: 'Rank the CSS rules and parent elements shaping a live layout.'");
+  expect(catalog).toBe('Rank the CSS rules and parent elements shaping an element’s size, position, or gap.');
+  expect(catalog.length).toBeLessThanOrEqual(120);
+
   await page.goto('/demo/?demo=1');
   await expect(page.getByText('article.product-card', { exact: false }).first()).toBeVisible();
   await expect(page.getByRole('region', { name: 'Final size and position' }).getByText('312 px')).toBeVisible();
@@ -27,7 +45,8 @@ test('@claim:ranked-cause-report renders the complete sample evidence', async ({
 
 test('@claim:demo-isolation keeps normal storage untouched and reset is deterministic', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('real:user-preference', 'keep-me'));
-  await page.goto('/demo/?demo=1');
+  await page.goto('/?demo=1');
+  await expect(page).toHaveURL('/demo/?demo=1');
   await expect(page.getByText('Demo — sample data, nothing is saved to your real data')).toBeVisible();
   await page.getByRole('button', { name: 'Capture again' }).click();
   await page.getByRole('button', { name: 'Reset demo' }).click();
@@ -76,6 +95,7 @@ test('@claim:private-exports downloads both formats without private sample detai
   expect(html).toContain('element-1');
   expect(html).not.toContain('product-card');
   expect(html).not.toContain('customer=secret');
+  expect(html).not.toContain('#offer');
   expect(html).not.toContain('Canvas daypack');
 });
 
@@ -88,7 +108,7 @@ test('@claim:capture-comparison shows exact measurement and page changes', async
   await expect(page.locator('#changes-copy')).toContainText('class changed');
 });
 
-test('@claim:free-core exposes analysis, reports, and exports without a payment gate', async ({ page }) => {
+test('@claim:free-core exposes analysis and both exports without a payment gate', async ({ page }) => {
   await page.goto('/demo/?demo=1');
   await expect(page.getByRole('heading', { name: 'Ranked CSS causes' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Export JSON' })).toBeEnabled();

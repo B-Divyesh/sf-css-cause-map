@@ -1,32 +1,32 @@
-# Copy audit — polish round 2
+# Copy audit — polish round 3
 
-Audited on 2026-08-28. Counts treat hyphenated terms and CSS values as one word. No sentence exceeds 22 words. No banned marketing word appears.
+Audited on 2026-08-28. Counts treat hyphenated terms and CSS values as one word. No sentence exceeds 22 words. No banned marketing word appears. Round 3 removes the unsupported causal promise from the first screen and metadata.
 
 ## Landing-page sentences
 
 | Words | Sentence | Result |
 | ---: | --- | --- |
-| 8 | Find the CSS rule causing a layout gap. | Pass |
-| 16 | For frontend developers debugging live layouts, rank the rules and parent elements most likely shaping the selected element. | Pass |
+| 8 | Rank the CSS rules shaping a layout gap. | Pass; `@claim:ranked-cause-report` |
+| 18 | For frontend developers debugging live layouts, rank the rules and parent elements most likely shaping the selected element. | Pass |
 | 6 | See a ranked cause report immediately. | Pass |
 | 7 | Nothing is saved to your real data. | Pass |
 | 4 | Core analysis works offline. | Pass; `@claim:offline-core` |
 | 4 | Analysis stays in Chrome. | Pass; `@claim:privacy-boundaries` |
-| 7 | Core analysis and exports are free. | Pass; `@claim:free-core` |
+| 6 | Core analysis and exports are free. | Pass; `@claim:free-core` |
 | 8 | Trace one layout effect through its parent elements. | Pass |
-| 11 | See computed styles, layout measurements, and parent constraints in one cause report. | Pass; `@claim:ranked-cause-report` |
-| 7 | Open the side panel. | Pass |
+| 12 | See computed styles, layout measurements, and parent constraints in one cause report. | Pass; `@claim:ranked-cause-report` |
+| 4 | Open the side panel. | Pass |
 | 11 | Select the element with a pointer, or use Tab and Enter. | Pass |
-| 10 | See the CSS rules and parent settings ranked by likely effect. | Pass; `@claim:ranked-cause-report` |
-| 5 | Reproduce the layout problem. | Pass |
-| 11 | Capture again, then export a private HTML or JSON report. | Pass; `@claim:capture-comparison`, `@claim:private-exports` |
-| 7 | Scores rank visible CSS evidence. | Pass |
+| 11 | See the CSS rules and parent settings ranked by likely effect. | Pass; `@claim:ranked-cause-report` |
+| 4 | Reproduce the layout problem. | Pass |
+| 10 | Capture again, then export a private HTML or JSON report. | Pass; `@claim:capture-comparison`, `@claim:private-exports` |
+| 5 | Scores rank visible CSS evidence. | Pass |
 | 8 | They do not reveal Chrome’s internal layout decisions. | Pass |
-| 11 | The parent creates three tracks that constrain this card. | Pass |
-| 10 | There are no accounts, analytics, page uploads, or broad site permissions. | Pass; `@claim:privacy-boundaries` |
+| 9 | The parent creates three tracks that constrain this card. | Pass |
+| 11 | There are no accounts, analytics, page uploads, or broad site permissions. | Pass; `@claim:privacy-boundaries` |
 | 7 | Exports remove page text and URL queries. | Pass; `@claim:private-exports` |
-| 9 | You can replace CSS selectors with anonymous labels. | Pass; `@claim:private-exports` |
-| 9 | Install the ZIP as an unpacked Chrome extension. | Pass |
+| 8 | You can replace CSS selectors with anonymous labels. | Pass; `@claim:private-exports` |
+| 8 | Install the ZIP as an unpacked Chrome extension. | Pass |
 | 11 | Find the CSS rules and parent elements shaping a selected element. | Pass |
 | 6 | Notebook image generated for this product. | Pass; provenance in `.factory/design.md` |
 
@@ -48,7 +48,17 @@ Every README sentence is 22 words or fewer. The round 2 test and deployment line
 | 3 | Report log cleared. | Pass; confirmed result |
 | 8 | All saved reports and private notes were deleted. | Pass; confirmed result |
 
-The catalog line is 93 characters, starts with “Trace,” and names the job without marketing words.
+## Round 3 claim alignment
+
+| Surface | Copy | Result |
+| --- | --- | --- |
+| Root title and social title | CSS Cause Map — rank CSS rules shaping layout gaps | Pass; 50 characters; `@claim:ranked-cause-report` |
+| Root description | Rank the CSS rules and parent elements most likely shaping an element's size, position, or gap. | Pass; 16 words; `@claim:ranked-cause-report` |
+| Package description | Rank the CSS rules and parent elements shaping a layout problem. | Pass; 11 words; `@claim:ranked-cause-report` |
+| Extension description | Rank the CSS rules and parent elements shaping a live layout. | Pass; 11 words; `@claim:ranked-cause-report` |
+| Catalog | Rank the CSS rules and parent elements shaping an element’s size, position, or gap. | Pass; 83 characters; verb first; `@claim:ranked-cause-report` |
+
+The title, hero, metadata, package descriptions, and catalog now promise ranking rather than browser-engine causation.
 
 ## Terminology
 

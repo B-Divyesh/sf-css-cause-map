@@ -70,6 +70,18 @@ test('demo is accessible, contained, and uses the notebook layout', async ({ pag
 test('one click exposes the first ranked cause in the 390 by 844 viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
+  const firstScreen = [
+    page.locator('#hero-title'),
+    page.locator('.lede'),
+    page.getByRole('link', { name: 'Try it with sample data' }),
+    page.locator('.action-note'),
+    page.locator('.hero-facts li').last()
+  ];
+  for (const element of firstScreen) {
+    const box = await element.boundingBox();
+    expect(box, 'required first-screen content has a layout box').not.toBeNull();
+    expect(box!.y + box!.height, 'required first-screen content is visible before scrolling').toBeLessThan(844);
+  }
   await page.getByRole('link', { name: 'Try it with sample data' }).click();
   await expect(page).toHaveURL('/demo/?demo=1');
   const reportTitle = await page.locator('#report-title').boundingBox();
@@ -82,7 +94,7 @@ test('one click exposes the first ranked cause in the 390 by 844 viewport', asyn
 
 test('each route has unique metadata and the shared skeleton', async ({ page }) => {
   const routes = [
-    ['/', "CSS Cause Map — find a layout gap's CSS cause"],
+    ['/', 'CSS Cause Map — rank CSS rules shaping layout gaps'],
     ['/demo/?demo=1', 'Demo — CSS Cause Map'],
     ['/privacy/', 'Privacy — CSS Cause Map'],
     ['/terms/', 'Terms — CSS Cause Map'],
@@ -145,6 +157,6 @@ test('cached shell remains available offline after service-worker activation', a
 
   await context.setOffline(true);
   await page.reload();
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Find the CSS rule');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Rank the CSS rules shaping a layout gap');
   await context.setOffline(false);
 });

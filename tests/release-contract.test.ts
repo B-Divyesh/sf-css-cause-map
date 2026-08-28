@@ -16,13 +16,16 @@ describe('release regression contracts', () => {
     expect(scripts['prepare:wxt']).toBe('wxt prepare');
     expect(scripts.pretypecheck).toContain('prepare:wxt');
     expect(scripts.pretest).toContain('prepare:wxt');
+    expect(scripts['pretest:unit']).toContain('prepare:wxt');
     expect(scripts['pretest:claims']).toContain('prepare:wxt');
+    expect(scripts['pretest:browser']).toContain('prepare:wxt');
   });
 
   it('ships static-site response policies with immutable asset caching', async () => {
     const config = await jsonFile('site/public/staticwebapp.config.json');
     const headers = config.globalHeaders as Record<string, string>;
     const routes = config.routes as Array<{ route: string; headers: Record<string, string> }>;
+    const responseOverrides = config.responseOverrides as Record<string, { rewrite: string }>;
 
     expect(headers['Content-Security-Policy']).toContain("default-src 'self'");
     expect(headers['Content-Security-Policy']).toContain("connect-src 'self'");
@@ -30,6 +33,7 @@ describe('release regression contracts', () => {
     expect(headers['X-Frame-Options']).toBe('DENY');
     expect(headers['Permissions-Policy']).toContain('camera=()');
     expect(headers['Cache-Control']).toContain('max-age=300');
+    expect(responseOverrides['404'].rewrite).toBe('/404/index.html');
     for (const route of ['/assets/*', '/media/*', '/downloads/*']) {
       expect(routes.find((entry) => entry.route === route)?.headers['Cache-Control']).toBe('public, max-age=31536000, immutable');
     }
