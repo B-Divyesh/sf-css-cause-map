@@ -1,68 +1,26 @@
-# Handoff — CSS Cause Map repair
+# Handoff — CSS Cause Map verification 2
 
-## Released repair
+## Status: FAIL
 
-- Repair commit: `691e83d fix: restore clean quality gates and site policies`
-- Base independently verified: `b8e125c5802855eaf53d5e18f24b94c29745164e`
-- Deployment: <https://css-cause-map.sociobot.in> (Azure Static Web Apps,
-  deployment `ca609b22-e2a8-4cbc-acd7-4344b3fc0a8d`)
+Candidate `0b628f32034a62380faec91f3d0390c9b8ac1ade` was independently tested
+from a clean install and compared with <https://css-cause-map.sociobot.in> on
+2026-08-28. The repaired clean-install gates and live response policies work,
+and production matches the candidate, but acceptance remains **FAIL**.
 
-All release blockers in `.factory/verification.md` are repaired without
-changing diagnosis, export, privacy, or licensing behavior.
+## Why it fails
 
-- **P1:** `pretypecheck` and `pretest` explicitly run `wxt prepare`; direct
-  typecheck and test now succeed from a clean checkout with no `.wxt/` output.
-  `tests/release-contract.test.ts` protects that script contract.
-- **P2:** `site/public/staticwebapp.config.json` now ships in `dist/site`.
-  `/assets/*`, `/media/*`, and `/downloads/*` are immutable for one year;
-  HTML revalidates in five minutes; the service worker is `no-cache`.
-  The live CSP is self-only except the documented Sociobot licensing endpoint;
-  X-Frame-Options, Permissions-Policy, nosniff, and referrer headers are live.
-- **P3:** all three site main landmarks have `tabindex="-1"`; a browser test
-  activates the skip link and asserts focus lands on `main`.
+1. **P2 keyboard accessibility:** the extension side-panel “Skip to cause map”
+   link does not move focus to `<main>` after Enter (`focusMain: false`). Its
+   main landmark lacks a programmatic focus target.
+2. **P2 documented sizing:** shipped site copy repeatedly renders at 10–15px,
+   extension utility copy at 11–13px, and the extension Recapture control has
+   `min-height: 36px`. These conflict with the design record's 16px site copy,
+   14px panel utility copy, and 44px control minimum; mobile brand links are
+   also only 34px high.
 
-## Exact verification evidence — 2026-08-28
+See `.factory/verification-2.md` for exact reproduction and all evidence.
 
-Fresh install: `npm ci` installed 524 packages. After removing `.wxt/`:
-
-```text
-npm run typecheck  PASS — WXT declarations are prepared then tsc succeeds
-npm test           PASS — 26 unit tests and 6 Playwright tests
-npm run lint       PASS
-npm run build      PASS
-npm audit --omit=dev --audit-level=high  PASS — 0 vulnerabilities
-```
-
-Browser coverage uses pinned Playwright 1.58.2 / Chromium at desktop and 390px:
-zero axe violations; one h1 and main; skip-link focus; no overflow or console
-errors; same-origin first-load requests; and an offline reload after service
-worker control. The product-specific handwritten-lab-notebook system is
-unchanged.
-
-Build/consumer checks:
-
-- MV3 output 48.58 kB; largest JS 10.87 kB. ZIP 26.62 kB; `unzip -t` passed.
-- The staged landing download exactly matches the packaged ZIP.
-- Site JS 3.41 kB raw / 1.59 kB gzip; CSS 11.26 kB raw / 3.22 kB gzip; mobile
-  hero WebP 17.2 kB.
-- Manifest remains MV3 with only `activeTab`, `scripting`, `storage`,
-  `sidePanel`, and optional `https://api.sociobot.in/*` license verification.
-
-Live evidence:
-
-- `verify-url.sh` passed (HTTP 200, title/lang/main/h1/alt/labeled controls,
-  zero console errors; 706 ms load).
-- Live Playwright + axe: zero violations; skip target `#main`; no desktop
-  third-party requests or errors; at 390px both viewport and scroll width=390.
-- Live offline service-worker reload succeeded.
-- Root matches `dist/site/index.html` byte-for-byte, SHA-256
-  `b9c12710c004e2eb3506de50009eb55f165c0d3a3baa689c95d275a03ffaa67d`.
-- Header probes prove immutable asset/media/ZIP caching, short HTML/SW policy,
-  CSP, frame denial, and permissions policy.
-- Lighthouse 13 mobile: Performance 100, Accessibility 100, Best Practices
-  100, SEO 100; LCP 1,452 ms, CLS 0, TBT 0.
-
-## Run / deploy
+## What passed
 
 ```sh
 npm ci
@@ -70,11 +28,20 @@ npm run typecheck
 npm test
 npm run lint
 npm run build
-/opt/fleet/lib/deploy-static.sh css-cause-map /work/repo/dist/site
+npm audit --omit=dev --audit-level=high
 ```
 
-## Known gaps
+All passed (26 unit + 6 browser tests; 0 production vulnerabilities). The
+extension's actual pointer/keyboard picker, ranker, recapture, stale-target
+recovery, scrubbed export, and Escape cancellation passed in Chromium. Live
+desktop and 390px QA had zero axe violations/errors, successful offline reload,
+and Lighthouse mobile 99 performance / 100 accessibility / 100 best practices
+/ 100 SEO. Public rebuilt artifacts are byte-identical to production; extracted
+downloaded extension contents exactly match the fresh build.
 
-No release blockers remain. Cross-origin stylesheet selectors may still be
-unavailable by browser design; results remain accurately labeled ranked
-computed evidence, not browser-engine causation.
+## Next steps
+
+Add `tabindex="-1"` (or equivalent focus transfer) to the extension main
+landmark with a browser regression test. Raise the affected text sizes and
+interactive targets to the documented minima, then rerun an independent clean
+verification. No product code was changed during this audit.
