@@ -1,67 +1,52 @@
-# Handoff — polish round 2
+# Handoff — adversarial first-read review 3
 
 ## Status
 
-PASS. Every finding in review 1, polish 1, and review 2 is closed. Runtime candidate `d56c690` is deployed at <https://css-cause-map.sociobot.in>.
+FAIL. Review 3 found one BLOCKING issue: the live h1 and root/social titles
+promise an identified CSS cause, while the product and registered claim only
+rank visible evidence and disclaim browser-layout causation.
 
-## What changed
+The complete review is in `.factory/review-3.md`. No product code was changed.
 
-- Standalone claim commands now prepare WXT from a clean clone.
-- The mobile demo presents the ranked cause report before the selected-page specimen. Its first cause is visible at 390×844.
-- Navigation targets are at least 44×44 px, and browser tests measure both dimensions.
-- Saved reports now have a visible two-step Clear report log action. The privacy page and a packaged-extension claim test cover deletion.
-- Unregistered README test-coverage and response-header promises were replaced with direct instructions.
-- The masked mobile demo overflow found during visual verification was removed and added to regression coverage.
-- WXT was updated to 0.21.4, removing all npm audit findings.
-- The catalog description and copy audit were updated. The handwritten lab-notebook identity and browser-extension artifact class are unchanged.
+## What was done
 
-The exhaustive finding map is in `.factory/polish-2.md`. Screenshots are in `.factory/evidence/polish-2-*.png`.
+- Read the brief, visual thesis, claim registry, README, demo contract, every
+  earlier review/polish record, and the prior handoff.
+- Repeated the cold 390×844 and 1366×900 first-read audit in fresh live browser
+  contexts.
+- Exercised the one-click demo, capture, reset, exit, both exports, storage
+  isolation, offline reload, same-origin request boundary, and console state.
+- Ran every command in `.factory/claims.json` from a clean no-local clone.
+- Rechecked all prior finding IDs against the live site and current source.
+- Crawled links; checked route metadata, HTTP 404, focus/Back behavior, shared
+  skeleton, target sizing, reduced-motion source, and product identity.
+- Ran live Axe on five routes at mobile and desktop sizes and ran the factory
+  URL verifier.
+- Compared the fresh build with production. Root, demo, privacy, terms, 404,
+  hashed CSS/JS, and the extension ZIP matched byte-for-byte.
 
-## Exact verification
+## Verification
 
-Final clean clone: `/tmp/css-cause-map-polish2-final-zVmgXH` from `d56c690`.
+Clean clone: `/tmp/css-cause-map-review3-clean-xbudGa`
 
 ```text
-npm ci                                      PASS — 304 packages
-12 commands from .factory/claims.json      PASS — 12/12 independently
-npm run typecheck                           PASS
-npm run lint                                PASS — zero warnings
-npm test                                    PASS — 28 Vitest; 31 Playwright; 1 intentional duplicate mobile extension check skipped
-npm run build                               PASS — MV3 extension, ZIP, and dist/site
-npm audit --audit-level=high                PASS — 0 vulnerabilities
-unzip -t packaged ZIP                       PASS
+npm ci                PASS — 304 packages; 0 vulnerabilities
+12 claim commands     PASS — 12/12
+npm run typecheck     PASS
+npm run lint          PASS
+npm test              PASS — 28 Vitest; 31 Playwright; 1 intentional skip
+npm run build         PASS
+verify-url.sh          PASS against production
+live Axe               PASS — zero violations on 10 route/viewport checks
+unzip -t               PASS for the live extension ZIP
 ```
 
-The one Playwright skip is intentional: the packaged side-panel test runs once in desktop Chromium; the site suite runs at both desktop and mobile sizes.
+The standalone claim output is at `/tmp/review3-claims.log` for the lifetime of
+this disposable worker.
 
-Build sizes: extension 46.63 kB total; ZIP 25.45 kB; site JS 0.38 kB + 0.40 kB gzip; demo JS 1.76 kB gzip; CSS 4.71 kB gzip. These are below the product budgets.
+## Required next step
 
-Lighthouse 12.4.0 against the built site and again against production: Performance 100, Accessibility 100, Best Practices 100, SEO 100; LCP 0.9 s, CLS 0, TBT 0 ms.
-
-`verify-url.sh` against production: HTTP 200, 600 ms load, correct title and `lang`, one h1, one main, no missing alt text, no unlabeled buttons, and no console errors.
-
-Live cold checks at 390×844 and 1366×900 confirmed:
-
-- first-screen job, audience, primary sample action, and three facts;
-- direct and compatibility demo URLs, isolated storage, reset, exit, export, and offline capture;
-- first ranked cause at y=728 in the initial 844 px viewport;
-- zero Axe violations, zero undersized effective targets, zero clipped main content, and zero console errors;
-- per-route metadata, forward/Back focus, shared legal links, and product-styled HTTP 404;
-- same-origin-only demo traffic and live cache/security headers;
-- byte-identical live HTML/CSS/JS/legal/404/ZIP artifacts. ZIP SHA-256 is `567200f939e2f7ae600b7c4381d3f2f218eb9bd6637f483d6290ae7e0e9529d0`.
-
-## Run and deploy
-
-```sh
-npm ci
-npm run typecheck
-npm run lint
-npm test
-npm run build
-```
-
-The work-order deployment command is `npm ci && npm test && npm run build:site`; deploy `dist/site/` as a static site.
-
-## Known gaps and next steps
-
-None.
+Apply F-3-1's exact copy fix: use “Rank the CSS rules shaping a layout gap” for
+the h1 and matching non-causal wording in root, Open Graph, Twitter, meta,
+package, and catalog copy. Update the metadata regression assertion, deploy,
+and repeat the full review. No other gap was found.
