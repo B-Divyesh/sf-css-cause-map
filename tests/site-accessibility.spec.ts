@@ -110,6 +110,7 @@ test('each route has unique metadata and the shared skeleton', async ({ page }) 
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social-card\.jpg/);
     await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
     await expect(page.getByText('Built by Param Factory · Version 1.0.1')).toBeVisible();
+    expect(await undersizedTargets(page, 44), `${route} has a target below 44 by 44 pixels`).toEqual([]);
   }
 });
 
