@@ -1,6 +1,6 @@
-# Copy audit — polish round 3
+# Copy audit — polish round 4
 
-Audited on 2026-08-28. Counts treat hyphenated terms and CSS values as one word. No sentence exceeds 22 words. No banned marketing word appears. Round 3 removes the unsupported causal promise from the first screen and metadata.
+Audited on 2026-08-28. Counts treat hyphenated terms and CSS values as one word. No sentence exceeds 22 words. No banned marketing word appears. Round 4 registers the final installation statement at its landing-page location.
 
 ## Landing-page sentences
 
@@ -56,7 +56,11 @@ Every README sentence is 22 words or fewer. The round 2 test and deployment line
 | Root description | Rank the CSS rules and parent elements most likely shaping an element's size, position, or gap. | Pass; 16 words; `@claim:ranked-cause-report` |
 | Package description | Rank the CSS rules and parent elements shaping a layout problem. | Pass; 11 words; `@claim:ranked-cause-report` |
 | Extension description | Rank the CSS rules and parent elements shaping a live layout. | Pass; 11 words; `@claim:ranked-cause-report` |
-| Catalog | Rank the CSS rules and parent elements shaping an element’s size, position, or gap. | Pass; 83 characters; verb first; `@claim:ranked-cause-report` |
+| Catalog | Rank CSS rules and parent elements shaping a selected element’s size, position, or gap. | Pass; 87 characters; verb first; `@claim:ranked-cause-report` |
+
+## Round 4 claim-location closure
+
+The final landing call-to-action sentence “Install the ZIP as an unpacked Chrome extension.” is registered under `production-build`. Its tagged test checks the rendered statement, download URL, downloaded bytes, ZIP integrity, and MV3 manifest.
 
 The title, hero, metadata, package descriptions, and catalog now promise ranking rather than browser-engine causation.
 

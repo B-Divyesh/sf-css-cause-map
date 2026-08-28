@@ -30,7 +30,7 @@ test('@claim:ranked-cause-report renders the complete sample evidence', async ({
   const catalog = (await readFile(resolve(root, '.factory/catalog-description.txt'), 'utf8')).trim();
   expect(packageJson.description).toBe('Rank the CSS rules and parent elements shaping a layout problem.');
   expect(manifestSource).toContain("description: 'Rank the CSS rules and parent elements shaping a live layout.'");
-  expect(catalog).toBe('Rank the CSS rules and parent elements shaping an element’s size, position, or gap.');
+  expect(catalog).toBe('Rank CSS rules and parent elements shaping a selected element’s size, position, or gap.');
   expect(catalog.length).toBeLessThanOrEqual(120);
 
   await page.goto('/demo/?demo=1');
@@ -298,12 +298,27 @@ test('@claim:local-data-deletion clears every saved report and private note', as
   }
 });
 
-test('@claim:production-build creates the complete extension and static package', async () => {
-  await access(resolve(root, '.output/chrome-mv3/manifest.json'));
+test('@claim:production-build creates the complete extension and static package', async ({ page }) => {
+  const manifestPath = resolve(root, '.output/chrome-mv3/manifest.json');
+  const stagedZipPath = resolve(root, 'dist/site/downloads/css-cause-map-chrome.zip');
+  await access(manifestPath);
   await access(resolve(root, '.output/css-cause-map-1.0.1-chrome.zip'));
   await access(resolve(root, 'dist/site/index.html'));
   await access(resolve(root, 'dist/site/demo/index.html'));
-  await access(resolve(root, 'dist/site/downloads/css-cause-map-chrome.zip'));
-  const result = await execFileAsync('unzip', ['-t', resolve(root, 'dist/site/downloads/css-cause-map-chrome.zip')]);
+  await access(stagedZipPath);
+
+  await page.goto('/');
+  await expect(page.locator('.final-note')).toContainText('Install the ZIP as an unpacked Chrome extension.');
+  const download = page.locator('.final-note a[download]');
+  await expect(download).toHaveAttribute('href', '/downloads/css-cause-map-chrome.zip');
+  const response = await page.request.get('/downloads/css-cause-map-chrome.zip');
+  expect(response.ok()).toBe(true);
+  expect(await response.body()).toEqual(await readFile(stagedZipPath));
+
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as { manifest_version?: number };
+  expect(manifest.manifest_version).toBe(3);
+  const listing = await execFileAsync('unzip', ['-Z1', stagedZipPath]);
+  expect(listing.stdout.split('\n')).toContain('manifest.json');
+  const result = await execFileAsync('unzip', ['-t', stagedZipPath]);
   expect(result.stdout).toContain('No errors detected');
 });

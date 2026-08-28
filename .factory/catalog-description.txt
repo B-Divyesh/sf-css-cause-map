@@ -1,1 +1,1 @@
-Rank the CSS rules and parent elements shaping an element’s size, position, or gap.
+Rank CSS rules and parent elements shaping a selected element’s size, position, or gap.

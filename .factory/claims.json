@@ -79,8 +79,8 @@
   {
     "id": "production-build",
     "claim": "The production build creates an unpacked MV3 extension, package ZIP, and deployable site with the download.",
-    "where": "README",
+    "where": "README; landing final call-to-action",
     "test": "npm run test:claims -- --grep @claim:production-build",
-    "sandbox": "run npm run build, assert all outputs, inspect the MV3 manifest, and test ZIP integrity"
+    "sandbox": "run npm run build; assert all outputs and the landing installation statement; fetch the staged download; compare it byte-for-byte; inspect the MV3 manifest; test ZIP integrity"
   }
 ]

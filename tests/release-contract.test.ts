@@ -41,7 +41,7 @@ describe('release regression contracts', () => {
   });
 
   it('registers every claim once and gives it one tagged browser test', async () => {
-    const claims = JSON.parse(await readFile(resolve(root, '.factory/claims.json'), 'utf8')) as Array<{ id: string; test: string }>;
+    const claims = JSON.parse(await readFile(resolve(root, '.factory/claims.json'), 'utf8')) as Array<{ id: string; test: string; where: string }>;
     const claimTests = await readFile(resolve(root, 'tests/claims.spec.ts'), 'utf8');
     const ids = claims.map((claim) => claim.id);
     expect(new Set(ids).size).toBe(ids.length);
@@ -51,6 +51,7 @@ describe('release regression contracts', () => {
     }
     const tags = [...claimTests.matchAll(/@claim:([a-z0-9-]+)/g)].map((match) => match[1]);
     expect(tags.sort()).toEqual([...ids].sort());
+    expect(claims.find((claim) => claim.id === 'production-build')?.where).toContain('landing final call-to-action');
   });
 
   it('keeps the extension skip target and documented size floors in source', async () => {
