@@ -15,8 +15,9 @@ review commit `a772a2936f2938a711acd40ceb005e8240c75455`.
   `evidence/polish-1-demo-desktop.png`,
   `evidence/polish-1-demo-mobile.png`, and
   `evidence/polish-1-not-found.png`.
-- Live check: deployed verification is recorded in the handoff after the
-  production upload.
+- Live check: 2026-08-28 fresh-context verification passed on
+  `https://css-cause-map.sociobot.in`; see `.factory/handoff.md` and
+  `evidence/live/`.
 
 ## Review findings
 
